@@ -90,43 +90,326 @@ const tempArr = [89, 30, 25, 32, 72, 70, 51, 42, 25, 24, 53, 55, 78, 50, 13, 40,
 
 // Implementing merge sort
 function msort(array) {
-    if (array.length <= 1) {
-        return array;
-    }
+  if (array.length <= 1) {
+    return array;
+  }
 
-    let middle = Math.floor(array.length / 2);
+  let middle = Math.floor(array.length / 2);
 
-    let left = array.slice(0, middle);
-    let right = array.slice(middle, array.length)
+  let left = array.slice(0, middle);
+  let right = array.slice(middle, array.length);
 
-    left = msort(left);
-    right = msort(right);
+  left = msort(left);
+  right = msort(right);
 
-    return merge(array, left, right);
+  return merge(array, left, right);
 }
 
 function merge(array, left, right) {
-    let leftIndex = 0;
-    let rightIndex = 0; // right
-    let k = 0;
+  let leftIndex = 0;
+  let rightIndex = 0; // right
+  let k = 0;
 
-    while (leftIndex < left.length && rightIndex < right.length) {
-        if (left[leftIndex] < right[rightIndex]) {
-            array[k++] = left[leftIndex++]
-        } else {
-            array[k++] = right[rightIndex++]
-        }
+  while (leftIndex < left.length && rightIndex < right.length) {
+    if (left[leftIndex] < right[rightIndex]) {
+      array[k++] = left[leftIndex++];
+    } else {
+      array[k++] = right[rightIndex++];
     }
+  }
 
-    for (let i = leftIndex; i < left.length; i++ ){
-        array[k++] = left[i];
-    }
-    for (let j = rightIndex; j < right.length; j++) {
-        array[k++] = right[j];
-    }
+  for (let i = leftIndex; i < left.length; i++ ){
+    array[k++] = left[i];
+  }
+  for (let j = rightIndex; j < right.length; j++) {
+    array[k++] = right[j];
+  }
 
-    return array;
+  return array;
 }
 
 
-console.log(msort(tempArr));
+// console.log(msort(tempArr));
+
+
+// Sorting Linked List using merge sort
+class _Node{
+  constructor(value,next){
+    this.value = value;
+    this.next = next;
+  }
+}
+
+class LinkedList{
+  constructor(){
+    this.head = null;
+  }
+
+  insertFirst(item){     
+    this.head = new _Node(item,this.head);
+  }
+
+  insertLast(item){
+    // checks if ll is empty
+    if (this.head === null){
+      this.insertFirst(item);
+      return;
+    }
+    let tempNode = this.head;
+    while(tempNode.next !== null){
+      tempNode = tempNode.next;
+    }
+    tempNode.next = new _Node(item,null);
+  }
+
+  insertAt(item,value){
+    let currNode = this.head;
+    let prevNode = this.head;
+    if (currNode === null){
+      this.insertFirst(item); 
+      return;
+    }
+    for (let i=0;i<value;i++){
+      if(currNode.next === null){
+        currNode.next = new _Node(item,null);
+        return;
+      }
+      prevNode = currNode;
+      currNode = currNode.next;
+    }
+    prevNode.next = new _Node(item,currNode);
+  }
+
+  insertBefore(item,value){
+    if (this.head === null){
+      return null;
+    }
+    // currNode is where to insert
+    // nextNode is where to find value
+    let currNode = this.head;
+    let prevNode = this.head;
+    
+    while (currNode.value !== value){
+      if(currNode.next === null){
+        return null;
+      }
+      prevNode = currNode;
+      currNode = prevNode.next;
+    }
+    const newNode = new _Node(item,currNode);
+    prevNode.next = newNode;
+  }
+
+  insertAfter(item,value){
+    if (this.head === null){
+      return null;
+    }
+    // currNode is where to insert
+    // prevNode is where to find value
+    let currNode = this.head;
+    let prevNode = this.head;
+    
+    while (prevNode.value !== value){
+      if(currNode.next === null){
+        return null;
+      }
+      prevNode = currNode;
+      currNode = currNode.next;
+    }
+    const newNode = new _Node(item,currNode);
+    prevNode.next = newNode;
+  }
+
+  find(item){
+    // checks if ll is empty
+    if (this.head === null){
+      return null;
+    }
+
+    let tempNode = this.head;
+    while(tempNode.value !== item){
+      // checks to see if at the end of ll
+      if (tempNode.next=== null){
+        console.log('item not found');
+        return null;
+      }
+      tempNode = tempNode.next;
+    }
+    return tempNode;
+  }
+
+  remove(item){
+    // checks if ll is empty
+    if (this.head === null){
+      return null;
+    }
+
+    // checks if value is in head
+    if (this.head.value===item){
+      this.head = this.head.next;
+      return;
+    }
+
+    // start at head
+    let prevNode = this.head;
+    let currNode = this.head;
+
+    // loop until currNode value is item
+    while(currNode !==null && currNode.value !== item){
+      prevNode = currNode;
+      currNode = currNode.next;
+    }
+    // remove pointer pointing at item
+    // checks to see if at end of ll
+    if (currNode=== null){
+      console.log('Error: item not in LinkedList');
+      return;
+    }
+    prevNode.next = currNode.next;
+  }
+}
+
+// other linked list functions
+function display(ll){
+  let currNode = ll.head;
+  let output = 'head->';
+  while (currNode !== null){
+    output += `${currNode.value}->`;
+    currNode = currNode.next;
+  }
+  output += 'null';
+  console.log(output);
+  return output;
+}
+
+function size(ll){
+  let currNode = ll.head;
+  let size = 0;
+  if (currNode===null){
+    return size;
+  }
+  while (currNode !== null){
+    currNode = currNode.next;
+    size++;
+  }
+  return size;
+}
+
+function isEmpty(ll){
+  return ll.head === null;
+}
+
+function findPrevious(ll,item){
+  let prevNode = ll.head;
+  let currNode = ll.head;
+  if (currNode === null){
+    return null;
+  }
+  while (currNode!== null && currNode.value !== item){
+    prevNode = currNode;
+    currNode = currNode.next;
+  }
+  if (currNode===null){
+    return null;
+  }
+  return prevNode;
+}
+
+function findLast(ll){
+  let currNode = ll.head;
+  let prevNode = ll.head;
+  if (currNode === null){
+    return null;
+  }
+  while (currNode!== null){
+    prevNode = currNode;
+    currNode = currNode.next;
+  }
+
+  return prevNode;
+}
+
+function clear(ll){
+  ll.head = null;
+}
+
+function findMiddle(ll){
+  if (isEmpty(ll)){
+    return null;
+  }
+  const middle = Math.floor(size(ll)/2);
+  let curr = ll.head;
+  let counter = 0;
+  while(counter < middle){
+    curr = curr.next;
+    counter++;
+  }
+  return curr;
+}
+
+function mergeSortLinkedList(list){
+  if (size(list)<= 1){
+    return list;
+  }
+  const middle = findMiddle(list);
+  let left = new LinkedList();
+  // loop through 0 - middle, insertLast on the list
+  let curr = list.head;
+  while (curr !== middle){
+    left.insertFirst(curr.value);
+    curr = curr.next;
+  }
+  let right = new LinkedList();
+  while (curr !== null){
+    right.insertFirst(curr.value);
+    curr = curr.next;
+  }
+  let newList = new LinkedList();
+
+  left = mergeSortLinkedList(left);
+  right = mergeSortLinkedList(right);
+
+  return mergeLinkedList(newList,left,right);
+
+}
+
+function mergeLinkedList(list,left,right){
+
+  let currLeft = left.head;
+  let currRight = right.head;
+  while (left.head !== null && right.head!== null){
+    if (left.head.value < right.head.value){
+      list.insertLast(left.head.value);
+      left.remove(currLeft.value);
+      currLeft = left.head;
+    }else{
+      list.insertLast(right.head.value);
+      right.remove(currRight.value);
+      currRight = right.head;
+    }
+  }
+  while (currLeft !== null){
+    list.insertLast(currLeft.value);
+    left.remove(currLeft.value);
+    currLeft = left.head;
+  }
+  while (currRight !== null){
+    list.insertLast(currRight.value);
+    right.remove(currRight.value);
+    currRight = right.head;
+  }
+  return list;
+}
+
+// const list = new LinkedList();
+// list.insertFirst(2);
+// list.insertFirst(7);
+// list.insertFirst(1);
+// list.insertFirst(9);
+// list.insertFirst(4);
+// list.insertFirst(6);
+// list.insertFirst(5);
+// list.insertFirst(17);
+
+// display(mergeSortLinkedList(list));
+

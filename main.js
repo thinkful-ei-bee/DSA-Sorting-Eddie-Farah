@@ -417,13 +417,29 @@ function mergeLinkedList(list,left,right){
 // Bucket Sort
 // [14, 30, 25, 32, 72, 70, 51, 42, 25, 24, 53, 55, 78, 50, 13, 40, 48, 32, 26, 2, 33, 89] lowest = 2, highest = 89
 function bucketSort(array, lowest, highest) {
-    const sortedArray = new Array(highest - lowest)
-    for (let i = 0; i < array.length; i++) {
-        sortedArray[array[i] - lowest] = array[i];
-    }
+  const sortedArray = new Array(highest - lowest);
+  for (let i = 0; i < array.length; i++) {
+    sortedArray[array[i] - lowest] = array[i];
+  }
 
-    return sortedArray;
+  return sortedArray;
 }
 
 let unsortedArr = [14, 30, 25, 32, 72, 70, 51, 42, 25, 24, 53, 55, 78, 50, 13, 40, 48, 32, 26, 2, 33, 89];
-console.log(bucketSort(unsortedArr, 2, 89));
+// console.log(bucketSort(unsortedArr, 2, 89));
+
+
+// Sort in place
+
+function unSort(array){
+  let randomIndex = 0;
+  const max = array.length -1;
+  for (let i =0;i<array.length;i++){
+    randomIndex = Math.floor(Math.random()*(max));
+    swap(array,i,randomIndex);
+  }
+  return array;
+}
+
+const arr = [1,2,3,4,5,6,7,8];
+console.log(unSort(arr));

@@ -24,3 +24,28 @@
 // Which two lists would be merged on the 7th merge?
 // On the 7th merge it would be lists 43 and 34 to be merged
 
+
+
+// Understanding quicksort
+// 1. The pivot could have been 17, but could not have been 14
+// False, pivot could be both, values to the left of 17 or 14 are all lower, and values to the right are all higher. 
+
+// 2. The pivot could have been either 14 or 17
+// True. Values to the left of 17 or 14 are all lower, and values to the right are all higher. 
+
+// 3. Neither 14 nor 17 could have been the pivot
+// False. All other value are either higher or lower than values to their left/right. 
+
+// 4. The pivot could have been 14, but could not have been 17
+// False, pivot could be both, values to the left of 17 or 14 are all lower, and values to the right are all higher. 
+
+
+// 2) 14, 17, 13, 15, 19, 10, 3, 16, 9, 12 
+// When using the last item on the list as a pivot
+// 1st partition: 10, 17, 13, 15, 19, 14, 3, 16, 9, 12
+// 2nd partition: 10, 3, 13, 15, 19, 14, 17, 16, 9, 12
+
+// When using the first item on the list as a pivot
+// 1st partition: 14, 13, 17, 15, 19, 10, 3, 16, 9, 12 
+// 2nd partition: 14, 13, 10, 15, 19, 17, 3, 16, 9, 12 
+

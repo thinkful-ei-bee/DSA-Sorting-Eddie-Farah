@@ -413,3 +413,17 @@ function mergeLinkedList(list,left,right){
 
 // display(mergeSortLinkedList(list));
 
+
+// Bucket Sort
+// [14, 30, 25, 32, 72, 70, 51, 42, 25, 24, 53, 55, 78, 50, 13, 40, 48, 32, 26, 2, 33, 89] lowest = 2, highest = 89
+function bucketSort(array, lowest, highest) {
+    const sortedArray = new Array(highest - lowest)
+    for (let i = 0; i < array.length; i++) {
+        sortedArray[array[i] - lowest] = array[i];
+    }
+
+    return sortedArray;
+}
+
+let unsortedArr = [14, 30, 25, 32, 72, 70, 51, 42, 25, 24, 53, 55, 78, 50, 13, 40, 48, 32, 26, 2, 33, 89];
+console.log(bucketSort(unsortedArr, 2, 89));

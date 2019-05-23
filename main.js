@@ -97,9 +97,9 @@ function msort(array) {
     left = msort(left);
     right = msort(right);
 
-
+    merge(left, right, array);
 }
 
 function merge(array, left, right) {
-    
+
 }
